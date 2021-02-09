@@ -1,0 +1,159 @@
+---
+layout: default
+permalink: /
+---
+
+<div id="service">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2># ERRORS团队 </h2>
+      </div>
+    </div>
+    <div class="row centered" id="service-list">
+      
+      <div class="col-md-3 col-xs-6">
+        <a href="https://www.vulbox.com/whitehats/trancer">{% include pic.html name="errors/trancer" %}</a>
+        <h4>trancer <a href="https://www.vulbox.com/whitehats/trancer"><i class="fa fa-hand-o-right"></i></a></h4>
+        <p>东风骤起惹青丝，暗香疏影犹不觉</p>
+      </div>
+
+      <div class="col-md-3 col-xs-6">
+        <a href="https://www.vulbox.com/whitehats/Gyp1991">{% include pic.html name="errors/Gyp1991" %}</a>
+        <h4>Gyp1991 <a href="https://www.vulbox.com/whitehats/Gyp1991"><i class="fa fa-hand-o-right"></i></a></h4>
+        <p>会当凌绝顶，一览众山小</p>
+      </div>
+      
+      <div class="col-md-3 col-xs-6">
+        <a href="https://www.vulbox.com/whitehats/bin4xin">{% include pic.html name="errors/bin4xin" %}</a>
+        <h4>Bin4xin <a href="https://www.vulbox.com/whitehats/bin4xin"><i class="fa fa-hand-o-right"></i></a></h4>
+        <p>天意似将颁大任，微躯何厌忍饥寒</p>
+      </div>
+      <div class="col-md-3 col-xs-6">
+        <a href="https://www.vulbox.com/whitehats/somecat">{% include pic.html name="errors/somecat" %}</a>
+        <h4>somecat <a href="https://www.vulbox.com/whitehats/somecat"><i class="fa fa-hand-o-right"></i></a></h4>
+        <p>小楼一夜听春雨，深巷明朝卖杏花</p>
+      </div>
+    </div>
+  </div><!--/container -->
+</div><!--/service -->
+
+<div class="container">
+  <div class="row">
+    <div id="recent-events" class="col-md-6 col-md-push-6">
+      <h2> # 置顶文章 </h2> 
+      {% for event in site.categories['event'] limit:5 %} 
+      <div class="event" data-event-date="{{event.date | date: "%F"}}">
+        <div class="event-title">
+          <a href="{{ event.url | prepend: site.baseurl }}">
+             <h4>{{ event.title }}</h4>
+          </a>
+        </div>
+        <div class="event-meta">
+          <span><strong>时间: </strong>{{event.date | date: "%F"}}{% if event.time %} {{event.time}} {% endif %}</span>
+          <span><strong>地点:</strong> {{event.place}}</span>
+          <span class="event-status">
+          </span>
+        {% if event.video or event.slides or event.youtube or event.audio %}
+        <br>
+        {% if event.slides %}
+        <a data-toggle="tooltip" title="讲稿下载" class="label label-info" href="{{event.slides}}" target="_blank"><i class="fa fa-file-alt fa-fw"></i></a>
+        {% endif %}
+        {% endif %}
+        </div>
+        <div class="event-abstract">
+        {{ event.excerpt | strip_html | truncate: 240, '...'}}
+        </div>
+      </div>
+      {% endfor %} 
+      <div>
+        <a href={{"/events/"|prepend: site.baseurl}}><i class="fa fa-hand-o-right"></i> MORE</a>
+      </div>
+    </div>
+    <div id="recent-posts" class="col-md-6 col-md-pull-6">
+      <h2> # 博客窗口 </h2> 
+      {% for post in site.categories['blog'] limit:5 %} 
+      <div class="post">
+        <div class="post-title">
+          <a href="{{ post.url | prepend: site.baseurl }}">
+             <h4><i class="fa fa-file-text-o"></i> {{ post.title }}</h4>
+          </a>
+        </div>
+        <div class="post-meta">
+          {{post.author}}, {{post.date | date: "%Y-%-m-%-d"}}
+        </div>
+        <div class="post-abstract">
+        {{ post.excerpt | strip_html | truncate: 240, '...'}}
+        </div>
+      </div>
+      {% endfor %} 
+      <div>
+        <a href={{"/blog/"|prepend: site.baseurl}}><i class="fa fa-hand-o-right"></i> MORE</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  <div id="join-tuna" class="col-md-12">
+    <h2> # 加入我们 </h2> 
+    <p>盒子团队申请 <a>https://www.vulbox.com/team/ERRORS</a></p>
+    <p>或者邮件联系 <a>chihou.pro@gmail.com</a></p>
+  </div>
+  </div>
+</div>
+
+<div id="join-button" class="visible-xs">
+  <div class="container">
+    <div class="row">
+      <div class="btn-group btn-group-justified col-xs-12">
+        <a class="btn btn-large btn-success" href="https://www.vulbox.com/team/ERRORS"> 加入ERRORS / Join Us </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+
+  var today = function() { 
+    var pad = function (number) {
+      var r = String(number);
+      if ( r.length === 1 ) {
+        r = '0' + r;
+      }
+      return r;
+    }
+
+    var _today = new Date();
+    return Date.parse(
+      _today.getFullYear().toString() + "-"
+      + pad(_today.getMonth()+1) + "-"
+      + pad(_today.getDate())
+    );
+
+  }();
+
+  $('#recent-events .event').each(function() {
+    // console.log($(this).attr("data-event-date"));
+    var event_date = Date.parse($(this).attr("data-event-date")),
+        label = "";
+    if (today > event_date) {
+      label = "<span class='label label-info'>Finished</span>";
+    } else {
+      label = "<span class='label label-warning'>Upcoming</span>";
+    }
+    $(this).find(".event-status").append(label);
+  });
+});
+</script>
+
+<style>
+  .event-download-button {
+    width: 10px
+  }
+</style>
+
+<!--
+vim: ts=2 sts=2 sw=2 expandtab
+-->
